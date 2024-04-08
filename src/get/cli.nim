@@ -1,3 +1,6 @@
+#:___________________________________________________________
+## get.Lang  |  Copyright (C) Ivan Mar (sOkam!)  |  LGPLv3  :
+#:___________________________________________________________
 # @deps std
 import std/sets
 from std/sequtils import toSeq
