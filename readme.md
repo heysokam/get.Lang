@@ -46,9 +46,18 @@ get.nim.bin.build( ... )
 > It can behave as a system-wide installation if you always set the `--trgDir` to the same folder for all your projects.  
 > _eg: In your `$HOME/.lang` folder, or any other folder of your choosing_.  
 
-### Alternative Installation
+### Alternative Installation (TBD)
 `get.Lang` has a strong emphasis on not depending on existing toolchains being already installed on the system in order to bootstrap their tools.  
 As such, this library provides a way to bootstrap itself.  
+
+> **TBD**:  
+> Not implemented yet.  
+> The script will bootstrap nim to build get.Lang, and then build itself with ZigCC+Confy.  
+> In the meantime, you can bootstrap nim+getlang manually with:  
+> 1. Clone the Nim repo  
+> 2. Run their `build_all` script  
+> 3. Use the resulting nim/nimble binaries to build this app  
+
 ```md
 # Requirements
 git, gcc, (sh or powershell)
@@ -61,7 +70,6 @@ sh ./init.ps1
 ## Windows
 ./init.ps1
 ```
-
 
 ## Won't support
 `get.Lang` will never support languages that do not provide an easy way to create a `per-project` installation of its toolset, without depending on the language already being installed before-hand.  
