@@ -8,10 +8,12 @@ import confy
 confy.cfg.nim.systemBin = off
 
 # Build
-build Program.new(
-  src  = cfg.srcDir/"get.nim",
-  deps = Dependencies.new(
-    submodule( "nstd",  "https://github.com/heysokam/nstd"  ),
-    submodule( "jsony", "https://github.com/treeform/jsony" ),
-    ), # << Dependencies.new( ... )
-  ) # << Program.new( ... )
+when isMainModule:
+  build Program.new(
+    src  = cfg.srcDir/"get.nim",
+    deps = Dependencies.new(
+      submodule( "nstd",  "https://github.com/heysokam/nstd"  ),
+      submodule( "jsony", "https://github.com/treeform/jsony" ),
+      ), # << Dependencies.new( ... )
+    ) # << Program.new( ... )
+
