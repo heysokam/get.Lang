@@ -103,32 +103,36 @@ proc buildCC (
     nim     : Path;
     force   : bool;
     verbose : bool = false;
-  ) :void=
+  ) :Path=
   ## @descr Builds the zigcc binary if it doesn't exist
+  let trg = "zigcc".Path
   nimz.buildBase(
     src     = "zigcc.nim".Path,
-    trg     = "zigcc".Path,
+    trg     = trg,
     trgDir  = trgDir,
     nim     = nim,
     force   = force,
     verbose = verbose,
     ) # << nimz.buildBase( ... )
+  result = trgDir/trg
 #___________________
 proc buildCpp (
     trgDir  : Path;
     nim     : Path;
     force   : bool;
     verbose : bool = false;
-  ) :void=
+  ) :Path=
   ## @descr Builds the zigcpp binary if it doesn't exist
+  let trg = "zigcpp".Path
   nimz.buildBase(
     src     = "zigcpp.nim".Path,
-    trg     = "zigcpp".Path,
+    trg     = trg,
     trgDir  = trgDir,
     nim     = nim,
     force   = force,
     verbose = verbose,
     ) # << nimz.buildBase( ... )
+  result = trgDir/trg
 
 
 #_______________________________________
@@ -140,7 +144,7 @@ proc build *(
     zigBin  : Path;
     force   : bool = false;
     verbose : bool = false;
-  ) :void=
+  ) :tuple[cc:Path, cpp:Path] {.discardable.}=
   ## @descr Writes and builds the source code of both NimZ aliases when they do not exist.
   let rewrite = force or not fileExists(trgDir/zigBin)
   #___________________
@@ -158,14 +162,14 @@ proc build *(
     verbose = verbose,
     ) # << nimz.writeCpp( ... )
   #___________________
-  nimz.buildCC(
+  result.cc = nimz.buildCC(
     trgDir  = trgDir,
     nim     = nim,
     force   = force,
     verbose = verbose,
   ) # << nimz.buildCC( ... )
   #___________________
-  nimz.buildCpp(
+  result.cpp = nimz.buildCpp(
     trgDir  = trgDir,
     nim     = nim,
     force   = force,

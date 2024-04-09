@@ -6,11 +6,14 @@
 import std/httpclient as http
 # @deps ndk
 import nstd/strings
-import nstd/logger
 import nstd/paths
+import nstd/logger
+# @deps get
+from ./cfg import nil
 
 
 #_______________________________________
+# Download Tools
 proc dl *(url :string; trgFile :Path; report :bool= true) :void=
   let client = newHttpClient()
   if report: info &"Downloading {url}  as  {trgFile} ..."
