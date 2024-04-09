@@ -30,11 +30,21 @@ get -h                      # List all the available options and their defaults
 # As a Library
 import get
 
-get.zig.json.download( ... )
-get.zig.bin.download( ... )
+zig.get(
+  dir     = TARGET_DIR,       # Path where the language will be installed
+  index   = JSON_INDEX_NAME,  # Filename of the index.json file (without its folder)
+  force   = FORCE_DOWNLOAD,   # on/off. Force downloading even if the lang already exists at TARGET_DIR
+  binName = ZIG_NAME,         # (optional) Filename of the expected zig binary file (without its folder)
+  verbose = VERBOSE,          # (optional) on/off. Activate verbose messages of the process
+  )
 
-get.nim.repo.clone( ... )
-get.nim.bin.build( ... )
+nim.get(
+  dir     = TARGET_DIR,        # Path where the language will be installed
+  M       = MAJOR_VERSION,     # Major version of Nim that will be compiled. Must have a valid branch named `version-M-m`
+  m       = MINOR_VERSION,     # Minor version of Nim that will be compiled. Must have a valid branch named `version-M-m`
+  force   = FORCE_COMPILATION, # (optional) on/off. Force downloading even if the lang already cloned+compiled into TARGET_DIR
+  verbose = VERBOSE,           # (optional) on/off. Activate verbose messages of the process
+  )
 
 # Every function is commented with a short explanation of what it does.
 # Refer to the comments of each module to understand how to use them in your own code.
