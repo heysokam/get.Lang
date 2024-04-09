@@ -4,16 +4,43 @@
 # @fileoverview get.Nim API and cable connector to all its modules
 import ./nim/repo ; export repo
 import ./nim/bin  ; export bin
+import ./nim/nimz ; export nimz
 
-
+#_____________________________
+# Internal dependencies
+from nstd/paths import Path, absolutePath
 import ./cli as opts
-proc get *(cli :Cfg) :void=
+
+
+#_______________________________________
+# @section External API
+#_____________________________
+proc get *(
+    M       : SomeInteger;
+    m       : SomeInteger;
+    dir     : Path;
+    force   : bool = false;
+    verbose : bool = false;
+  ) :void=
   nim.repo.clone(
-    M   = cli.nimVers.M,
-    m   = cli.nimVers.m,
-    dir = cli.trgDir,
+    M       = M,
+    m       = m,
+    dir     = dir.absolutePath,
+    force   = force,
+    verbose = verbose,
     ) # << nim.repo.clone( ... )
   nim.bin.build(
-    dir = cli.trgDir,
+    dir     = dir.absolutePath,
+    force   = force,
+    verbose = verbose,
     ) # << nim.bin.build( ... )
+#_____________________________
+proc get *(cli :Cfg) :void=
+  nim.get(
+    M       = cli.nimVers.M,
+    m       = cli.nimVers.m,
+    dir     = cli.trgDir,
+    force   = cli.force,
+    verbose = cli.verbose,
+    ) # << nim.get( ... )
 

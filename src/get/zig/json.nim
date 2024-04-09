@@ -43,8 +43,9 @@ proc download (
   result = readFile(dir/index)
 #___________________
 proc download *(
-    dir   : Path;
-    index : Path = Zig_DefaultJson_Filename.Path;
+    dir     : Path;
+    index   : Path = Zig_DefaultJson_Filename.Path;
+    verbose : bool = false;
   ) :string {.discardable.}=
   ## @descr Downloads the latest zig.index.json versions file and saves it into {@arg dir}/{@arg index}
   ## @note Returns the raw json data as a discardable string

@@ -18,6 +18,7 @@ proc download *(
     index   : Path = Zig_DefaultJson_Filename.Path;
     binName : Path = Zig_DefaultBin.Path;
     force   : bool = false;
+    verbose : bool = false;
   ) :void=
   ## @descr Downloads the correct zig binaries for the current hostCPU/hostOS.
   if not dir.dirExists: md dir

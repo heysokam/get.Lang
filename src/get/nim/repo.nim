@@ -10,14 +10,15 @@ import ../cfg
 
 
 proc clone *(
-    M     : SomeInteger;
-    m     : SomeInteger;
-    dir   : Path;
-    force : bool = false;
+    M       : SomeInteger;
+    m       : SomeInteger;
+    dir     : Path;
+    force   : bool = false;
+    verbose : bool = false;
   ) :void=
   let branch = &"version-{M}-{m}"
   if not dirExists(dir):
-    let URL = cfg.Nim_DefaultURL
+    let URL = Nim_DefaultURL
     git &"clone --depth=1 -b {branch} {URL} {dir}"
   withDir dir:
     git "pull"
