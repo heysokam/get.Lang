@@ -58,7 +58,6 @@ proc get *(
     force   = force,
     verbose = verbose,
     ) # << minc.bin.build( ... )
-  echo result
 #_____________________________
 proc get *(cli :Cfg) :void=
   # Install MinC (installs its Zig and Nim dependencies)
