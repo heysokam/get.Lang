@@ -8,6 +8,20 @@ import nstd/shell
 import nstd/paths
 import nstd/logger
 
+#_______________________________________
+# @section ZigCC aliases: Compiler Command Template
+#_____________________________
+const CCTempl * = "{nim} c -d:zig --cc:clang --clang.exe=\"{zigcc}\" --clang.linkerexe=\"{zigcc}\" --clang.cppCompiler=\"{zigcpp}\" --clang.cppXsupport=\"-std=c++20\""
+  ## @descr
+  ##  Provides a template command for compiling Nim with ZigCC
+  ##  Provide the required variables in your code, prefix the string with `fmt` or `&` from `std/strformat`, and execute the command
+  ## @note You have to add your target source file, output folder, or any other Nim compiler options that you require
+  ##
+  ## @param cacheDir Folder where the Nim's cache files will be written.
+  ## @param nim Path to the Nim binary. Can be relative, absolute or on $PATH
+  ## @param zigcc Path to the zigcc alias binary. Can be relative, absolute or on $PATH
+  ## @param zigcpp Path to the zigcpp alias binary. Can be relative, absolute or on $PATH
+
 
 #_______________________________________
 # @section ZigCC aliases: File Template

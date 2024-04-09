@@ -5,6 +5,7 @@
 {.define:ssl.}
 import std/httpclient as http
 # @deps ndk
+import nstd/shell
 import nstd/strings
 import nstd/paths
 import nstd/logger
