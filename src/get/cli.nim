@@ -9,7 +9,6 @@ import nstd/opts
 import nstd/strings
 import nstd/paths
 # @deps get.Lang
-import ./tools
 from ./cfg import nil
 # @section Extra support for std types
 func `$` *(list :HashSet[Path]) :string=  list.toSeq.join(" ")
@@ -33,6 +32,10 @@ type Cfg * = object
   # Nim
   nimVers  *:NimVersion
   nimBin   *:Path
+  # MinC
+  zigSub   *:Path
+  nimSub   *:Path
+  mincSub  *:Path
 
 
 #_______________________________________
@@ -45,6 +48,7 @@ const KnownLong  :HashSet[string]=  [
   "trgDir",
   "zigJson","zigBin",
   "nimVers","nimBin",
+  "mincSub", "nimSub", "zigSub",
   ].toHashSet
 
 
@@ -66,11 +70,19 @@ const Help = """
   --verbose       : Activate verbose mode
   --force         : Same as -f
   --trgDir:path   : Define the path where the language will be output (default: getCurrentDir/bin/.lang)
+  # Zig Options  : ______________________________________________________
   --zigJson:path  : Define the path where Zig's index.json will be output (default: trgDir/{cfg.Zig_DefaultJson_Filename})
   --zigBin:name   : Define the name of the Zig's binary (default: {cfg.Zig_DefaultBin})
+  # Nim Options  : ______________________________________________________
   --nimVers:vers  : Define the nim version to download. (default: {cfg.Nim_DefaultVersion})
   --nimBin:name   : Define the name of the Nim's binary (default: {cfg.Nim_DefaultBin})
-  --release       : TBD
+  # MinC Options : ______________________________________________________
+  --mincSub:path  : (minc only) Subfolder of --trgDir where MinC will be installed  (default: {cfg.MinC_DefaultSub})
+  --nimSub:path   : (minc only) Subfolder of --trgDir where Nim will be installed   (default: {cfg.Nim_DefaultSub})
+  --zigSub:path   : (minc only) Subfolder of --trgDir where Zig will be installed   (default: {cfg.Zig_DefaultSub})
+
+  # TBD
+  --release       : ...
 
  Usage  Downloading Languages
           --=|=--
@@ -134,8 +146,14 @@ proc init *() :Cfg=
   result.mode     = if "release" in cli.opts.long: Release else: Debug
   result.trgDir   = if "trgDir" in cli.opts.long: cli.getLong("trgDir").Path else: getDefaultDir(result.lang)
   # Lang-Specific options
-  result.zigJson  = cli.getLong("zigJson").Path
-  result.zigBin   = if "zigBin" in cli.opts.long: cli.getLong("zigBin").Path else: cfg.Zig_DefaultBin.Path
+  # └─ Zig
+  result.zigJson  = if "zigJson" in cli.opts.long: cli.getLong("zigJson").Path else: cfg.Zig_DefaultJson_Filename.Path
+  result.zigBin   = if "zigBin"  in cli.opts.long: cli.getLong("zigBin").Path  else: cfg.Zig_DefaultBin.Path
+  # └─ Nim
   result.nimVers  = cli.getNimVers()
   result.nimBin   = if "nimBin" in cli.opts.long: cli.getLong("nimBin").Path else: cfg.Nim_DefaultBin.Path
+  # └─ MinC
+  result.zigSub   = if "zigSub"  in cli.opts.long: cli.getLong("zigSub").Path  else: cfg.Zig_DefaultSub.Path
+  result.nimSub   = if "nimSub"  in cli.opts.long: cli.getLong("nimSub").Path  else: cfg.Nim_DefaultSub.Path
+  result.mincSub  = if "mincSub" in cli.opts.long: cli.getLong("mincSub").Path else: cfg.MinC_DefaultSub.Path
 

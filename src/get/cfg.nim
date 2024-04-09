@@ -1,7 +1,6 @@
 #:___________________________________________________________
 ## get.Lang  |  Copyright (C) Ivan Mar (sOkam!)  |  LGPLv3  :
 #:___________________________________________________________
-from nstd/paths import Path
 
 
 #_______________________________________
@@ -29,11 +28,20 @@ const Zig_DefaultJson_URL      *{.strdefine.}= "https://ziglang.org/download/ind
 const Zig_MasterVersion_Name    {.strdefine.}= "master"
 const Zig_DefaultVersion       *{.strdefine.}= Zig_MasterVersion_Name
 const Zig_DefaultBin           *{.strdefine.}= "zig"
+const Zig_DefaultSub           *{.strdefine.}= ".zig"
 
 #_______________________________________
 # @section Nim Configuration
 #_____________________________
 const Nim_DefaultURL     *{.strdefine.}= "https://github.com/nim-lang/Nim"
-const Nim_DefaultBin     *{.strdefine.}= "nim"
 const Nim_DefaultVersion *{.strdefine.}= "2.0"
+const Nim_DefaultBin     *{.strdefine.}= "nim"
+const Nim_DefaultSub     *{.strdefine.}= ".nim"
+
+#_______________________________________
+# @section Nim Configuration
+#_____________________________
+const MinC_DefaultURL *{.strdefine.}= "https://github.com/heysokam/minc"
+const MinC_DefaultBin *{.strdefine.}= "minc"
+const MinC_DefaultSub *{.strdefine.}= ".minc"
 
