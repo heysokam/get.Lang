@@ -13,9 +13,21 @@ from ./cfg import nil
 
 
 #_______________________________________
-# Download Tools
+# @section Download Tools
+#_____________________________
 proc dl *(url :string; trgFile :Path; report :bool= true) :void=
   let client = newHttpClient()
   if report: info &"Downloading {url}  as  {trgFile} ..."
   client.downloadFile(url, trgFile.string)
   client.close()
+
+
+#_______________________________________
+# @section Buildsystem Tools
+#_____________________________
+proc submodule *(libDir :Path; name,url :string; sub :string= "src") :Path=
+  ## @descr Simple replacement for `@heysokam/confy`'s submodule function
+  let dir = libDir/name
+  if not dirExists(dir): git &"clone {url} {dir}"
+  result = libDir/name/sub
+
