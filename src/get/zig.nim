@@ -18,20 +18,18 @@ proc get *(
     dir     : Path;
     index   : Path;
     force   : bool;
-    binName : Path = "zig".Path;
     verbose : bool = false;
-  ) :void=
+  ) :Path {.discardable.}=
   if not dirExists(dir): md dir
   zig.json.download(
     dir     = dir.absolutePath,
     index   = index,
     verbose = verbose,
     ) # << zig.json.download( ... )
-  zig.bin.download(
+  result = zig.bin.download(
     dir     = dir.absolutePath,
     index   = index,
     force   = force,
-    binName = binName,
     verbose = verbose,
     ) # << zig.bin.download( ... )
 #_____________________________
@@ -40,6 +38,5 @@ proc get *(cli :Cfg) :void=
     dir     = cli.trgDir,
     index   = cli.zigJson,
     force   = cli.force,
-    binName = cli.zigBin,
     verbose = cli.verbose,
     ) # << zig.get( ... )

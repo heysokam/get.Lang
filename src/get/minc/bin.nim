@@ -27,7 +27,7 @@ proc build *(
     zigBin  : Path;
     force   : bool = false;
     verbose : bool = false;
-  ) :void=
+  ) :Path {.discardable.}=
   let (zigcc, zigcpp) = nimz.build(
     trgDir  = zigDir,
     nim     = nim,
@@ -49,4 +49,6 @@ proc build *(
   let src      = srcDir/"minc.nim"
   #  └─ Compile
   sh fmt BuildTempl
+  # Return the path to the resulting binary
+  result = binDir/"minc"
 

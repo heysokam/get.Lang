@@ -16,11 +16,11 @@ import ./json
 proc download *(
     dir     : Path;
     index   : Path = Zig_DefaultJson_Filename.Path;
-    binName : Path = Zig_DefaultBin.Path;
     force   : bool = false;
     verbose : bool = false;
-  ) :void=
+  ) :Path {.discardable.}=
   ## @descr Downloads the correct zig binaries for the current hostCPU/hostOS.
+  const binName = Zig_DefaultBin.Path
   if not dir.dirExists: md dir
   let link = json.latest(dir,index).url(dir,index)
   let file = dir/link.lastPathPart
@@ -31,4 +31,5 @@ proc download *(
     resDir.copyDirWithPermissions(dir)
     # Cleanup after done
     resDir.removeDir
+  result = dir/binName
 

@@ -34,7 +34,6 @@ zig.get(
   dir     = TARGET_DIR,       # Path where the language will be installed
   index   = JSON_INDEX_NAME,  # Filename of the index.json file (without its folder)
   force   = FORCE_DOWNLOAD,   # on/off. Force downloading even if the lang already exists at TARGET_DIR
-  binName = ZIG_NAME,         # (optional) Filename of the expected zig binary file (without its folder)
   verbose = VERBOSE,          # (optional) on/off. Activate verbose messages of the process
   )
 

@@ -18,50 +18,57 @@ import ./cfg
 #_____________________________
 proc get *(
     dir     : Path;
-    zigDir  : Path;
-    nimDir  : Path;
-    zigBin  : Path = cfg.Zig_DefaultBin.Path;
-    nimBin  : Path = cfg.Nim_DefaultBin.Path;
+    zigSub  : Path;
+    zigJson : Path;
+    nimSub  : Path;
+    nimVers : NimVersion;
+    mincSub : Path;
     force   : bool = false;
     verbose : bool = false;
-  ) :void=
+  ) :tuple[nim:Path, zig:Path, minc:Path] {.discardable.}=
+  # Install Zig (build requirement for MinC)
+  let trgDir  = dir.absolutePath
+  let zigDir  = trgDir/zigSub
+  let nimDir  = trgDir/nimSub
+  let mincDir = trgDir/mincSub
+  result.zig = zig.get(
+    dir     = zigDir,
+    index   = zigJson,
+    force   = force,
+    verbose = verbose,
+    ) # << zig.get( ... )
+  # Install Nim (build requirement for MinC)
+  result.nim = nim.get(
+    dir     = nimDir,
+    M       = nimVers.M,
+    m       = nimVers.m,
+    force   = force,
+    verbose = verbose,
+    ) # << nim.get( ... )
+  # Install MinC
   minc.repo.clone(
-    dir   = dir.absolutePath,
+    dir   = mincDir,
     force = force,
     ) # << minc.repo.clone( ... )
-  minc.bin.build(
-    dir     = absolutePath dir,
-    nim     = absolutePath nimDir/"bin"/nimBin,
+  result.minc = minc.bin.build(
+    dir     = mincDir,
+    nim     = result.nim,
     zigDir  = zigDir,
-    zigBin  = zigBin,
+    zigBin  = result.zig.lastPathPart,
     force   = force,
     verbose = verbose,
     ) # << minc.bin.build( ... )
+  echo result
 #_____________________________
 proc get *(cli :Cfg) :void=
-  # Install Zig (build requirement for MinC)
-  zig.get(
-    dir     = cli.trgDir/cli.zigSub,
-    index   = cli.zigJson,
-    binName = cli.zigBin,
-    force   = cli.force,
-    verbose = cli.verbose,
-    ) # << zig.get( ... )
-  # Install Nim (build requirement for MinC)
-  nim.get(
-    M       = cli.nimVers.M,
-    m       = cli.nimVers.m,
-    dir     = cli.trgDir/cli.nimSub,
-    force   = cli.force,
-    verbose = cli.verbose,
-    ) # << nim.get( ... )
-  # Install MinC
+  # Install MinC (installs its Zig and Nim dependencies)
   minc.get(
-    dir     = cli.trgDir/cli.mincSub,
-    zigDir  = cli.trgDir/cli.zigSub,
-    nimDir  = cli.trgDir/cli.nimSub,
-    zigBin  = cli.zigBin,
-    nimBin  = cli.nimBin,
+    dir     = cli.trgDir,
+    zigJson = cli.zigJson,
+    zigSub  = cli.zigSub,
+    nimSub  = cli.nimSub,
+    nimVers = cli.nimVers,
+    mincSub = cli.mincSub,
     force   = cli.force,
     verbose = cli.verbose,
     ) # << minc.get( ... )

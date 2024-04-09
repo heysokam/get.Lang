@@ -11,9 +11,9 @@ proc build *(
     dir     : Path;
     force   : bool = false;
     verbose : bool = false;
-  ) :void=
-  let trg = dir/"bin"/"nim"
-  if fileExists(trg) and not force: return
+  ) :Path {.discardable.}=
+  result = dir/"bin"/"nim"
+  if fileExists(result) and not force: return
   withDir dir:
     when defined(unix)    : sh &"./build_all.sh"
     elif defined(windows) : sh &"./build_all.bat"

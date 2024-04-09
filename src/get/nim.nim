@@ -21,7 +21,7 @@ proc get *(
     dir     : Path;
     force   : bool = false;
     verbose : bool = false;
-  ) :void=
+  ) :Path {.discardable.}=
   nim.repo.clone(
     M       = M,
     m       = m,
@@ -29,7 +29,7 @@ proc get *(
     force   = force,
     verbose = verbose,
     ) # << nim.repo.clone( ... )
-  nim.bin.build(
+  result = nim.bin.build(
     dir     = dir.absolutePath,
     force   = force,
     verbose = verbose,
