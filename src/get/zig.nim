@@ -18,7 +18,7 @@ proc get *(
     dir     : Path;
     index   : Path;
     force   : bool;
-    binName : Path;
+    binName : Path = "zig".Path;
     verbose : bool = false;
   ) :void=
   if not dirExists(dir): md dir
