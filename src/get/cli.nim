@@ -28,7 +28,6 @@ type Cfg * = object
   trgDir   *:Path
   # Zig
   zigJson  *:Path
-  zigBin   *:Path
   # Nim
   nimVers  *:NimVersion
   nimBin   *:Path
@@ -46,7 +45,7 @@ const KnownShort :HashSet[string]=  ["v","h","f"].toHashSet
 const KnownLong  :HashSet[string]=  [
   "help","version","verbose","release",
   "trgDir",
-  "zigJson","zigBin",
+  "zigJson",
   "nimVers","nimBin",
   "mincSub", "nimSub", "zigSub",
   ].toHashSet
@@ -72,7 +71,6 @@ const Help = """
   --trgDir:path   : Define the path where the language will be output (default: getCurrentDir/bin/.lang)
   # Zig Options  : ______________________________________________________
   --zigJson:path  : Define the path where Zig's index.json will be output (default: trgDir/{cfg.Zig_DefaultJson_Filename})
-  --zigBin:name   : Define the name of the Zig's binary (default: {cfg.Zig_DefaultBin})
   # Nim Options  : ______________________________________________________
   --nimVers:vers  : Define the nim version to download. (default: {cfg.Nim_DefaultVersion})
   --nimBin:name   : Define the name of the Nim's binary (default: {cfg.Nim_DefaultBin})
@@ -148,7 +146,6 @@ proc init *() :Cfg=
   # Lang-Specific options
   # └─ Zig
   result.zigJson  = if "zigJson" in cli.opts.long: cli.getLong("zigJson").Path else: cfg.Zig_DefaultJson_Filename.Path
-  result.zigBin   = if "zigBin"  in cli.opts.long: cli.getLong("zigBin").Path  else: cfg.Zig_DefaultBin.Path
   # └─ Nim
   result.nimVers  = cli.getNimVers()
   result.nimBin   = if "nimBin" in cli.opts.long: cli.getLong("nimBin").Path else: cfg.Nim_DefaultBin.Path
