@@ -34,7 +34,7 @@ proc build *(
     zigBin  = zigBin,
     force   = force,
     verbose = verbose,
-    ) # << bin.buildNimZ( ... )
+    ) # << nimz.build( ... )
   # MinC Buildsystem: Minimalist Confy Replacement
   #  └─ Folders
   let rootDir  = dir.absolutePath
@@ -48,6 +48,7 @@ proc build *(
   #  └─ Source Code
   let src      = srcDir/"minc.nim"
   #  └─ Compile
+  let nimBackend = "c"
   sh fmt BuildTempl
   # Return the path to the resulting binary
   result = binDir/"minc"
