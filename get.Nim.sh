@@ -54,11 +54,11 @@ version=${TargetVersion:-"2-0"}
 # Remote Files
 getZigURL="https://raw.githubusercontent.com/heysokam/get.Lang/master/get.Zig.sh"
 nimPatchURL="https://raw.githubusercontent.com/heysokam/get.Lang/master/src/zigcc.patch"
-zigccURL="https://raw.githubusercontent.com/heysokam/get.Lang/master/src/zigcc.nim"
+zigccURL="https://raw.githubusercontent.com/heysokam/get.Lang/master/src/zigcc.sh"
 # Zig
 zigDir=$binDir/.zig
 zig=$zigDir/zig
-zccSrc="$zigDir/zigcc.nim"
+zccSrc="$zigDir/zigcc.sh"
 zccTrg="zigcc"
 # Nim
 nimURL="https://github.com/nim-lang/Nim"
@@ -110,19 +110,11 @@ then
   cd $nimDir
 
   #______________________________________________
-  info "Compiling nim.stage1 for zigcc..."
-  source $nimDir/ci/funs.sh
-  CC="$zig cc" nimBuildCsourcesIfNeeded "$@"
-
-
-  #______________________________________________
-  info "Downloading the ZigCC alias source code ..."
-  curl -s $zigccURL > $zccSrc
-  #______________________________________________
-  info "Compiling zigcc alias from:  $zccSrc"
-  sed -i -e "s,ZIGCC,${zig},g" $zccSrc
-  $nim c -d:release --hint:LineTooLong:off --hint:Conf:off --skipProjCfg --skipParentCfg --out:$zccTrg --outDir:$zigDir $zccSrc
+  info "Downloading the ZigCC alias code ..."
   zigcc="$zigDir/$zccTrg"
+  curl -s $zigccURL > $zigcc
+  sed -i -e "s,ZIGCC,${zig},g" $zigcc
+  chmod +x $zigcc
 
 
   #______________________________________________
