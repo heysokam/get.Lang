@@ -12,23 +12,25 @@ set -eu
 ##
 #__________________________________________________________________________|
 ##
-## @important
+## @howto
 ##  Set these variables in CLI before calling the script to change the behavior of the script.
 ##
 ##  Examples:
-##  0. Using the default options
+##  0. Using the default options remotely
+##     curl https://raw.githubusercontent.com/heysokam/get.Lang/master/get.Zig.sh | bash
+##
+##  1. Using the default options
 ##     getZig.sh
 ##
-##  1. Installing into  ./some/other/dir
+##  2. Installing into  ./some/other/dir
 ##     TargetDir=./some/other/dir getZig.sh
 ##
-##  2. Installing version 0.12.0
+##  3. Installing version 0.12.0
 ##     TargetVersion=0.12.0 getZig.sh
 ##
-##  3. Installing version   0.13.0   into   ./this/other/folder
-##     TargetDir=./this/other/folder TargetVersion=0.12.0 getZig.sh
+##  4. Installing version   0.11.0   into   ./this/other/folder
+##     TargetDir=./this/other/folder TargetVersion=0.11.0 getZig.sh
 ##
-
 #_____________________________
 ## @descr Sets the target folder where the binaries will be output
 binDir=${TargetDir:-"./bin"}
