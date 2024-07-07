@@ -33,11 +33,11 @@ set -eu
 ##  2. Installing into  ./some/other/dir
 ##     TargetDir=./some/other/dir get.Nim.sh
 ##
-##  3. Installing version 0.12.0
-##     TargetVersion=0.12.0 get.Nim.sh
+##  3. Installing version 2.0.X
+##     TargetVersion=2-0 get.Nim.sh
 ##
-##  4. Installing version   0.11.0   into   ./this/other/folder
-##     TargetDir=./this/other/folder TargetVersion=0.11.0 get.Nim.sh
+##  4. Installing version   1.6.X   into   ./this/other/folder
+##     TargetDir=./this/other/folder TargetVersion=1-6 get.Nim.sh
 ##
 #_____________________________
 rootDir=$(pwd)
