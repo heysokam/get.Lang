@@ -20,16 +20,16 @@ set -eu
 ##     curl https://raw.githubusercontent.com/heysokam/get.Lang/master/get.Zig.sh | bash
 ##
 ##  1. Using the default options
-##     getZig.sh
+##     get.Zig.sh
 ##
 ##  2. Installing into  ./some/other/dir
-##     TargetDir=./some/other/dir getZig.sh
+##     TargetDir=./some/other/dir get.Zig.sh
 ##
 ##  3. Installing version 0.12.0
-##     TargetVersion=0.12.0 getZig.sh
+##     TargetVersion=0.12.0 get.Zig.sh
 ##
 ##  4. Installing version   0.11.0   into   ./this/other/folder
-##     TargetDir=./this/other/folder TargetVersion=0.11.0 getZig.sh
+##     TargetDir=./this/other/folder TargetVersion=0.11.0 get.Zig.sh
 ##
 #_____________________________
 ## @descr Sets the target folder where the binaries will be output
@@ -52,17 +52,27 @@ zvm=$zvmDir/self/zvm
 zigDir=$binDir/.zig
 zig=$zigDir/zig
 
+#___________________
+# get.Zig
+Prefix="༄ get.Zig |"
+info() { echo "$Prefix $@"; }
+
 #______________________________________________
 # Install zig locally if it doesn't already exist
 if [ ! -e $zig ]
 then
   # Download zvm
+  info "Creating zvm folder at:  $zvmDir"
   mkdir -p $zvmDir
+  info "Downloading and Running the zvm installer at:  $zvmInstall"
   curl https://raw.githubusercontent.com/tristanisham/zvm/master/install.sh > $zvmInstall
   chmod +x $zvmInstall
   HOME=$binDir $zvmInstall
   # Download Zig
+  info "Downloading Zig into:  $zigDir"
   HOME=$binDir $zvm install $version
   ln -s $(realpath $zvmDir/$version) $zigDir
+  info "Installed Zig Version:"
+  $zig version
 fi
 
