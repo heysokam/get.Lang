@@ -1,0 +1,25 @@
+diff --git a/config/nim.cfg b/config/nim.cfg
+index 1470de780..c41b9d203 100644
+--- a/config/nim.cfg
++++ b/config/nim.cfg
+@@ -362,3 +362,7 @@ tcc.options.always = "-w"
+   clang.options.linker %= "${clang.options.linker} -s"
+   clang.cpp.options.linker %= "${clang.cpp.options.linker} -s"
+ @end
++
++--cc:clang
++--clang.exe:"ZIGCC"
++--clang.linkerexe:"ZIGCC"
+diff --git a/koch.nim b/koch.nim
+index b927024b3..745c01e89 100644
+--- a/koch.nim
++++ b/koch.nim
+@@ -334,7 +334,7 @@ proc boot(args: string, skipIntegrityCheck: bool) =
+     let defaultCommand = if useCpp: "cpp" else: "c"
+     let bootOptions = if args.len == 0 or args.startsWith("-"): defaultCommand else: ""
+     echo "iteration: ", i+1
+-    var extraOption = ""
++    var extraOption = "--cc:clang --clang.exe=\"ZIGCC\" --clang.linkerexe=\"ZIGCC\""
+     var nimi = i.thVersion
+     if i == 0:
+       nimi = nimStart
