@@ -43,6 +43,7 @@ set -eu
 rootDir=$(pwd)
 ## @descr Sets the target folder where the binaries will be output
 binDir=${TargetDir:-"$rootDir/bin"}
+binDir=$(realpath $binDir)
 ## @descr Sets the target version that will be installed
 version=${TargetVersion:-"2-0"}
 #_____________________________
