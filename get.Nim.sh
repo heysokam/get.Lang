@@ -45,7 +45,7 @@ rootDir=$(pwd)
 binDir=${TargetDir:-"$rootDir/bin"}
 binDir=$(realpath $binDir)
 ## @descr Sets the target version that will be installed
-version=${TargetVersion:-"2-0"}
+version=${TargetVersion:-"2-2"}
 #_____________________________
 
 
