@@ -35,7 +35,7 @@ set -eu
 ## @descr Sets the target folder where the binaries will be output
 binDir=${TargetDir:-"./bin"}
 ## @descr Sets the target version that will be installed
-version=${TargetVersion:-"0.13.0"}
+version=${TargetVersion:-"0.14.0"}
 #_____________________________
 
 
